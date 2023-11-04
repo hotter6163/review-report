@@ -3,10 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"yarn dev:next\" \"yarn dev:prisma\" \"yarn studio\"",
+    "dev:next": "next dev",
+    "dev:prisma": "yarn prisma:generate --watch",
+    "format": "concurrently \"yarn format:prettier\" \"yarn format:prisma\"",
+    "format:prettier": "prettier --write --ignore-path .gitignore \"**/*.{js,jsx,ts,tsx,md}\"",
+    "format:prisma": "prisma format",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.0.5",
@@ -22,6 +30,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
     "postcss": "^8",
